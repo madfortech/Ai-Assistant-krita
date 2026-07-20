@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=Krita/PythonPlugin
+
+X-KDE-Library=ai_assistant
+X-Python-2-Compatible=false
+X-Krita-Manual=Manual.html
+
+Name=AI Assistant
+Comment=AI Assistant for Krita
