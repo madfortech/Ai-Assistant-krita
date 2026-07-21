@@ -40,7 +40,13 @@ def generate(prompt):
     context = ssl._create_unverified_context()
 
     with urlopen(request, timeout=TIMEOUT, context=context) as response:
-        return json.loads(response.read().decode("utf-8"))
+
+        body = response.read().decode("utf-8")
+
+        from PyQt5.QtWidgets import QMessageBox
+        QMessageBox.information(None, "API Response", body)
+
+        return json.loads(body)
 
 def me():
 

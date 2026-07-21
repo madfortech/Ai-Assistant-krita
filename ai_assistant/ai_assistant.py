@@ -1,5 +1,7 @@
 from krita import DockWidget
 from .settings_dialog import SettingsDialog
+from .protocol import Protocol
+from .executor import Executor
 
 from PyQt5.QtWidgets import (
     QWidget,
@@ -77,18 +79,38 @@ class DockerTemplate(DockWidget):
 
         try:
             result = generate(prompt)
-
-            text = result.get("text", "No response")
-
+            print("RESULT:", result)
+            # Update user info
             self.plan_label.setText(
-                f"Plan : {result['plan']}"
+                f"Plan : {result.get('plan', '-')}"
             )
 
             self.credit_label.setText(
-                f"Credits : {result['credits_remaining']}"
+                f"Credits : {result.get('credits_remaining', 0)}"
             )
 
-            self.prompt_box.setPlainText(text)
+            # Parse AI commands
+            commands = Protocol.parse(result)
+
+          
+            print("COMMANDS:", commands)
+            print("COUNT:", len(commands))
+
+            from PyQt5.QtWidgets import QMessageBox
+
+            QMessageBox.information(
+                None,
+                "Commands Count",
+                str(len(commands))
+            )
+
+            # Execute commands
+            Executor().execute(commands)
+
+            # Optional: show status
+            self.prompt_box.setPlainText(
+                f"Executed {len(commands)} command(s)"
+            )
 
         except Exception as e:
             QMessageBox.critical(
