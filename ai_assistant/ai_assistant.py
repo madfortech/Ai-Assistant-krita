@@ -79,7 +79,7 @@ class DockerTemplate(DockWidget):
 
         try:
             result = generate(prompt)
-            print("RESULT:", result)
+          
             # Update user info
             self.plan_label.setText(
                 f"Plan : {result.get('plan', '-')}"
@@ -91,18 +91,6 @@ class DockerTemplate(DockWidget):
 
             # Parse AI commands
             commands = Protocol.parse(result)
-
-          
-            print("COMMANDS:", commands)
-            print("COUNT:", len(commands))
-
-            from PyQt5.QtWidgets import QMessageBox
-
-            QMessageBox.information(
-                None,
-                "Commands Count",
-                str(len(commands))
-            )
 
             # Execute commands
             Executor().execute(commands)

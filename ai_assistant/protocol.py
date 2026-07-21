@@ -5,7 +5,6 @@ class Protocol:
     @staticmethod
     def parse(response):
 
-        print("PARSE INPUT =", response)
         if response is None:
             return []
 

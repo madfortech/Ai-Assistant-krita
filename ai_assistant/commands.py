@@ -14,19 +14,11 @@ class Commands:
 
         app = Krita.instance()
 
-        QMessageBox.information(None, "Debug", "Krita instance OK")
-
         doc = app.activeDocument()
 
         if doc is None:
             QMessageBox.critical(None, "Debug", "No Active Document")
             return
-
-        QMessageBox.information(
-            None,
-            "Debug",
-            "Document: " + doc.name()
-        )
 
         try:
             layer = doc.createNode(
@@ -34,51 +26,40 @@ class Commands:
                 "paintlayer"
             )
 
-            QMessageBox.information(None, "Debug", "createNode OK")
+          
 
             doc.rootNode().addChildNode(layer, None)
 
-            QMessageBox.information(None, "Debug", "addChildNode OK")
+            
 
             doc.setActiveNode(layer)
 
             doc.refreshProjection()
 
-            QMessageBox.information(None, "Debug", "Layer Created")
+           
 
         except Exception as e:
             QMessageBox.critical(None, "Exception", str(e))
 
     
     def set_color(self, cmd):
-        QMessageBox.information(
-            None,
-            "Debug",
-            "set_color() called"
-        )
-
+        
 
         color = cmd.get("color") or cmd.get("value") or "#000000"
 
         window = Krita.instance().activeWindow()
 
         if window is None:
-            print("No active window")
             return
 
         view = window.activeView()
 
         if view is None:
-            print("No active view")
             return
 
         qcolor = QColor(color)
 
-        QMessageBox.information(
-            None,
-            "Debug",
-            f"Color = {color}"
-        )
+        
 
         try:
             managed = ManagedColor.fromQColor(
@@ -88,11 +69,7 @@ class Commands:
 
             view.setForeGroundColor(managed)
 
-            QMessageBox.information(
-                None,
-                "Success",
-                f"Foreground color set: {color}"
-            )
+            
 
         except Exception as e:
             QMessageBox.critical(
@@ -124,11 +101,6 @@ class Commands:
                     break
 
         if brush is None:
-            QMessageBox.critical(
-                None,
-                "Brush Error",
-                f"Brush not found:\n{preset_name}"
-            )
             return
 
         window = app.activeWindow()
@@ -143,19 +115,11 @@ class Commands:
 
         view.setCurrentBrushPreset(brush)
 
-        QMessageBox.information(
-            None,
-            "Success",
-            f"Brush changed to:\n{preset_name}"
-        )
+      
     
     def set_size(self, cmd):
 
-        print(cmd)
-
         size = float(cmd.get("size", 10))
-
-        print("Requested Size:", size)
 
         window = Krita.instance().activeWindow()
 
@@ -167,11 +131,7 @@ class Commands:
         if view is None:
             return
 
-        print("Before:", view.brushSize())
-
         view.setBrushSize(size)
-
-        print("After:", view.brushSize())
 
 
     def draw_line(self, cmd):
@@ -196,12 +156,6 @@ class Commands:
         )
 
         doc.refreshProjection()
-
-        QMessageBox.information(
-            None,
-            "Success",
-            f"Line: ({x1},{y1}) → ({x2},{y2})"
-        )
 
     
     def draw_rectangle(self, cmd):
@@ -232,12 +186,8 @@ class Commands:
         node.paintRectangle(rect)
 
         doc.refreshProjection()
+ 
 
-        QMessageBox.information(
-            None,
-            "Success",
-            f"Rectangle: ({x1},{y1}) → ({x2},{y2})"
-        )
     def draw_circle(self, cmd):
 
         doc = Krita.instance().activeDocument()
@@ -267,11 +217,6 @@ class Commands:
 
         doc.refreshProjection()
 
-        QMessageBox.information(
-            None,
-            "Success",
-            f"Circle: ({x1},{y1}) → ({x2},{y2})"
-        )
     
     
     def draw_ellipse(self, cmd):
@@ -303,13 +248,7 @@ class Commands:
 
         doc.refreshProjection()
 
-        QMessageBox.information(
-            None,
-            "Success",
-            f"Ellipse: ({x1},{y1}) → ({x2},{y2})"
-        )
     
-
     def draw_bezier(self, cmd):
 
         doc = Krita.instance().activeDocument()
@@ -340,13 +279,7 @@ class Commands:
         node.paintPath(path)
 
         doc.refreshProjection()
-
-        QMessageBox.information(
-            None,
-            "Success",
-            "Bezier curve drawn."
-        )
-    
+ 
 
     def draw_polygon(self, cmd):
 
@@ -378,12 +311,7 @@ class Commands:
         node.paintPolygon(points)
 
         doc.refreshProjection()
-
-        QMessageBox.information(
-            None,
-            "Success",
-            f"Polygon with {len(points)} points drawn."
-        )
+ 
     
 
      

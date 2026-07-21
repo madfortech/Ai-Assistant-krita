@@ -26,10 +26,6 @@ def generate(prompt):
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
 
-    print("URL:", repr(api_url))
-    print("KEY:", repr(api_key))
-    print("HEADERS:", headers)
-
     request = Request(
         api_url,
         data=data,
@@ -42,9 +38,6 @@ def generate(prompt):
     with urlopen(request, timeout=TIMEOUT, context=context) as response:
 
         body = response.read().decode("utf-8")
-
-        from PyQt5.QtWidgets import QMessageBox
-        QMessageBox.information(None, "API Response", body)
 
         return json.loads(body)
 

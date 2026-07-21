@@ -50,5 +50,4 @@ class Executor:
                     self.commands.draw_polygon(cmd)
 
             except Exception as e:
-                print(f"Executor Error ({action}): {e}")
-                print(f"Executor Error ({action}): {e}")
+                pass
